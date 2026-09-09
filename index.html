@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日々をつくるアプリ | 習慣アプリ & 目標アプリ</title>
+<meta name="description" content="続けたいこと、かなえたいこと。毎日に寄り添うふたつのアプリ「習慣アプリ」「目標アプリ」を紹介するページです。">
+<style>
+  :root {
+    --bg: #fafafa;
+    --surface: #ffffff;
+    --text: #1c1c1e;
+    --text-muted: #6b6b70;
+    --border: #ececef;
+    --habit-bg: #e7eefc;
+    --habit-accent: #3a63e0;
+    --habit-accent-dark: #24408f;
+    --goal-bg: #fbe9dd;
+    --goal-accent: #e07a3a;
+    --goal-accent-dark: #94491c;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "Segoe UI", sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+
+  .wrap {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Header */
+  header.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 24px 24px 0;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .logo .mark {
+    width: 22px;
+    height: 22px;
+    border-radius: 7px;
+    background: var(--text);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    line-height: 1;
+  }
+  .site-header nav a {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  /* Hero */
+  .hero {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 56px 24px 40px;
+    text-align: left;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--habit-accent);
+    display: inline-block;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 6vw, 34px);
+    line-height: 1.45;
+    font-weight: 800;
+    margin: 0 0 20px;
+    letter-spacing: -0.01em;
+  }
+  .hero p {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin: 0 0 32px;
+  }
+  .scroll-down {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 16px;
+    transition: transform 0.2s ease;
+  }
+  .scroll-down:hover { transform: translateY(3px); }
+
+  /* Apps section */
+  .apps {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 8px 24px 24px;
+  }
+  .apps-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .apps-heading h2 {
+    font-size: 17px;
+    font-weight: 800;
+    margin: 0;
+  }
+  .apps-count {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .app-card {
+    border-radius: 28px;
+    padding: 28px 24px;
+    margin-bottom: 20px;
+    scroll-margin-top: 24px;
+  }
+  .app-card--habit { background: var(--habit-bg); }
+  .app-card--goal { background: var(--goal-bg); }
+
+  .app-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .app-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: #fff;
+    object-fit: cover;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .app-tag {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+  }
+  .app-card--habit .app-tag { color: var(--habit-accent-dark); }
+  .app-card--goal .app-tag { color: var(--goal-accent-dark); }
+
+  .app-name {
+    font-size: 13px;
+    font-weight: 700;
+    margin: 0 0 6px;
+    opacity: 0.75;
+  }
+  .app-catch {
+    font-size: 21px;
+    font-weight: 800;
+    line-height: 1.5;
+    margin: 0 0 14px;
+    letter-spacing: -0.01em;
+  }
+  .app-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin: 0 0 18px;
+  }
+
+  .app-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .app-features li {
+    font-size: 13.5px;
+    padding-left: 20px;
+    position: relative;
+    color: var(--text);
+  }
+  .app-features li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+  .app-card--habit .app-features li::before { background: var(--habit-accent); }
+  .app-card--goal .app-features li::before { background: var(--goal-accent); }
+
+  .app-status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 18px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12.5px;
+    font-weight: 700;
+  }
+  .status-pill::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  .app-card--habit .status-pill { color: var(--habit-accent-dark); }
+  .app-card--goal .status-pill { color: var(--goal-accent-dark); }
+
+  .status-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+  .app-card--habit .status-icon { color: var(--habit-accent); }
+  .app-card--goal .status-icon { color: var(--goal-accent); }
+
+  /* Footer */
+  footer {
+    max-width: 480px;
+    margin: 12px auto 0;
+    padding: 32px 24px 48px;
+    border-top: 1px solid var(--border);
+    font-size: 12.5px;
+    color: var(--text-muted);
+    text-align: center;
+  }
+  footer .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  footer a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  footer a:hover { color: var(--text); }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #101012;
+      --surface: #1c1c1f;
+      --text: #f5f5f7;
+      --text-muted: #9a9aa0;
+      --border: #2a2a2d;
+      --habit-bg: #1b2338;
+      --habit-accent: #6f93f0;
+      --habit-accent-dark: #a9c0f7;
+      --goal-bg: #34241b;
+      --goal-accent: #f0a066;
+      --goal-accent-dark: #f5c39a;
+    }
+    .app-icon { background: #2a2a2d; }
+    .status-icon { background: #2a2a2d; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo"><span class="mark">✓</span>日々をつくるアプリ</div>
+  <nav><a href="#apps">アプリ紹介 ↓</a></nav>
+</header>
+
+<section class="hero">
+  <span class="eyebrow">SMALL STEPS, EVERY DAY</span>
+  <h1>今日の一歩が、<br>明日の自分をつくる。</h1>
+  <p>続けたいこと。かなえたいこと。<br>あなたの毎日に寄り添う、ふたつのアプリ。</p>
+  <a href="#apps" class="scroll-down" aria-label="アプリ紹介へスクロール">↓</a>
+</section>
+
+<section id="apps" class="apps">
+  <div class="apps-heading">
+    <h2>開発中のアプリ</h2>
+    <span class="apps-count">OUR APPS / 02</span>
+  </div>
+
+  <article class="app-card app-card--habit" id="habit">
+    <div class="app-card-top">
+      <img src="assets/habit-icon.png" alt="習慣アプリのアイコン" class="app-icon">
+      <span class="app-tag">HABIT 01</span>
+    </div>
+    <p class="app-name">習慣アプリ</p>
+    <p class="app-catch">小さな「できた」を、<br>毎日の習慣に。</p>
+    <p class="app-desc">続けたいことを、少しずつ。日々の積み重ねを応援するアプリを開発しています。</p>
+    <ul class="app-features">
+      <li>週間グリッドで習慣の継続日数がひと目でわかる</li>
+      <li>ホーム画面ウィジェットで今日の進捗をすぐ確認</li>
+      <li>習慣をグループ分けして整理できる</li>
+    </ul>
+    <div class="app-status">
+      <span class="status-pill">公開準備中</span>
+      <span class="status-icon">✓</span>
+    </div>
+  </article>
+
+  <article class="app-card app-card--goal" id="goal">
+    <div class="app-card-top">
+      <img src="assets/goal-icon.png" alt="目標アプリのアイコン" class="app-icon">
+      <span class="app-tag">GOAL 02</span>
+    </div>
+    <p class="app-name">目標アプリ</p>
+    <p class="app-catch">かなえたいことに、<br>一歩ずつ近づく。</p>
+    <p class="app-desc">これからの自分に、目指すものを。目標に向かう日々を応援するアプリを開発しています。</p>
+    <ul class="app-features">
+      <li>目標をカードで管理し、テーマやフォントを自由にカスタマイズ</li>
+      <li>月次の振り返り機能で達成度を記録</li>
+      <li>ロック画面・ホーム画面ウィジェットで進捗を表示</li>
+    </ul>
+    <div class="app-status">
+      <span class="status-pill">公開準備中</span>
+      <span class="status-icon">🎯</span>
+    </div>
+  </article>
+</section>
+
+<footer>
+  <div class="footer-links">
+    <a href="https://atsushi-ito6.github.io/habit-tracker-privacy/">習慣アプリ プライバシーポリシー</a>
+    <a href="https://atsushi-ito6.github.io/goal-tracker-privacy/">目標アプリ プライバシーポリシー</a>
+  </div>
+  <p>&copy; 2026 Atsushi Ito</p>
+</footer>
+
+</body>
+</html>
