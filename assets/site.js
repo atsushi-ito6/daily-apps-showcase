@@ -1,6 +1,7 @@
 // Shared rendering helpers for index.html and app.html. Reads window.APPS from apps-data.js.
 
 var STATUS_LABELS = {
+  preparing: "公開準備中",
   developing: "開発中",
   released: "公開中"
 };
@@ -24,21 +25,31 @@ function appCardHtml(app) {
   var storeBtn = app.storeUrl
     ? '<a class="btn btn-primary accent-' + app.accent + '" href="' + escapeHtml(app.storeUrl) + '">App Storeで見る</a>'
     : "";
+  var shot = app.cardImage
+    ? '<a class="app-card-shot" href="' + detailUrl + '" aria-label="' + escapeHtml(app.name) + 'のスクリーンショット。タップすると詳細ページに移動します">' +
+        '<img src="' + escapeHtml(app.cardImage.src) + '" alt="' + escapeHtml(app.cardImage.alt) + '" loading="lazy">' +
+      '</a>'
+    : "";
   return (
     '<article class="app-card accent-' + app.accent + '">' +
-      '<div class="app-card-top">' +
-        '<a class="icon-link" href="' + detailUrl + '" aria-label="' + escapeHtml(app.name) + 'の詳細を見る">' +
-          '<img class="app-icon" src="' + app.icon + '" alt="' + escapeHtml(app.name) + 'のアイコン">' +
-        '</a>' +
-        '<div class="app-card-name-wrap">' +
-          '<a class="name-link" href="' + detailUrl + '">' + escapeHtml(app.name) + '</a>' +
-          '<div><span class="status-pill">' + statusLabel(app.status) + '</span></div>' +
+      '<div class="app-card-body">' +
+        '<div class="app-card-main">' +
+          '<div class="app-card-top">' +
+            '<a class="icon-link" href="' + detailUrl + '" aria-label="' + escapeHtml(app.name) + 'の詳細を見る">' +
+              '<img class="app-icon" src="' + app.icon + '" alt="' + escapeHtml(app.name) + 'のアイコン">' +
+            '</a>' +
+            '<div class="app-card-name-wrap">' +
+              '<a class="name-link" href="' + detailUrl + '">' + escapeHtml(app.name) + '</a>' +
+              '<div><span class="status-pill">' + statusLabel(app.status) + '</span></div>' +
+            '</div>' +
+          '</div>' +
+          '<p class="short-desc">' + escapeHtml(app.shortDescription) + '</p>' +
+          '<div class="app-card-actions">' +
+            '<a class="link-arrow" href="' + detailUrl + '">詳しく見る →</a>' +
+            storeBtn +
+          '</div>' +
         '</div>' +
-      '</div>' +
-      '<p class="short-desc">' + escapeHtml(app.shortDescription) + '</p>' +
-      '<div class="app-card-actions">' +
-        '<a class="link-arrow" href="' + detailUrl + '">詳しく見る →</a>' +
-        storeBtn +
+        shot +
       '</div>' +
     '</article>'
   );

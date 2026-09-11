@@ -73,6 +73,7 @@
               '<span class="ph-sub">スクリーンショット準備中</span>' +
             '</div>' +
           '</div>' +
+          (shot.caption ? '<p class="shot-caption">' + esc(shot.caption) + '</p>' : '') +
         '</div>'
       );
     }
@@ -104,13 +105,10 @@
 
   var pricing = app.pricing || {};
   var pricingCards = pricingCardHtml("無料プラン", pricing.free) + pricingCardHtml("プレミアムプラン", pricing.premium);
-  var plansLine = (pricing.plans && pricing.plans.length)
-    ? '<p class="pricing-plans">プラン: ' + pricing.plans.map(esc).join(" / ") + '</p>' : "";
   var noteLine = pricing.note ? '<p class="pricing-note">' + esc(pricing.note) + '</p>' : "";
 
   var supportLinks = "";
   if (app.privacyUrl) supportLinks += '<a href="' + esc(app.privacyUrl) + '">プライバシーポリシー</a>';
-  if (app.supportUrl) supportLinks += '<a href="' + esc(app.supportUrl) + '">サポート・お問い合わせ</a>';
 
   var others = window.APPS.filter(function (a) { return a.id !== app.id; }).slice(0, 2);
   var othersHtml = others.map(otherAppCardHtml).join("");
@@ -145,14 +143,13 @@
     '<section class="detail-section container reveal">' +
       '<h2>無料・有料機能</h2>' +
       (pricingCards ? '<div class="pricing-grid">' + pricingCards + '</div>' : '') +
-      plansLine +
       noteLine +
     '</section>' +
 
     (supportLinks ? (
       '<hr class="divider">' +
       '<section class="detail-section container reveal">' +
-        '<h2>サポート</h2>' +
+        '<h2>プライバシーポリシー</h2>' +
         '<div class="support-links">' + supportLinks + '</div>' +
       '</section>'
     ) : '') +

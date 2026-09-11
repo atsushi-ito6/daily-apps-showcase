@@ -161,6 +161,35 @@ header.site-header {
 }
 .app-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
 
+.app-card-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.app-card-main {
+  flex: 1 1 165px;
+  min-width: 165px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.app-card-shot {
+  flex: 0 0 auto;
+  display: block;
+  width: clamp(76px, 20vw, 130px);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  line-height: 0;
+}
+.app-card-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.app-card-shot:hover { border-color: var(--text-muted); }
+
 .app-card-top {
   display: flex;
   align-items: flex-start;
