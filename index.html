@@ -4,378 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>日々をつくるアプリ | 習慣アプリ & 目標アプリ</title>
-<meta name="description" content="続けたいこと、かなえたいこと。毎日に寄り添うアプリをつくっています。「習慣アプリ」「目標アプリ」を紹介するページです。">
+<meta name="description" content="続けたいこと、かなえたいこと。毎日に寄り添うアプリをつくっています。開発中のアプリ一覧はこちらから。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #fafaf9;
-    --surface: #ffffff;
-    --text: #1a1a1d;
-    --text-muted: #6d6d72;
-    --border: #ececea;
-    --habit: #3a63e0;
-    --habit-ink: #1f3d94;
-    --habit-tint: #eaf0fd;
-    --goal: #e0722f;
-    --goal-ink: #a64d18;
-    --goal-tint: #fdefe4;
-    --shadow: 0 30px 60px -25px rgba(20,20,30,0.35);
-  }
-
-  * { box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: "Zen Kaku Gothic New", -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
-    line-height: 1.75;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-  }
-
-  a { color: inherit; }
-  img { display: block; max-width: 100%; }
-
-  .container {
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 0 28px;
-  }
-
-  /* Reveal-on-scroll */
-  .reveal {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .reveal.is-visible { opacity: 1; transform: translateY(0); }
-  @media (prefers-reduced-motion: reduce) {
-    .reveal { opacity: 1; transform: none; transition: none; }
-  }
-
-  /* Header */
-  header.site-header {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    background: rgba(250, 250, 249, 0.78);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid var(--border);
-  }
-  .site-header .inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 0;
-  }
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    font-weight: 700;
-    font-size: 15px;
-    letter-spacing: -0.01em;
-  }
-  .logo .mark {
-    width: 24px;
-    height: 24px;
-    border-radius: 8px;
-    background: linear-gradient(135deg, var(--habit), var(--goal));
-    color: #fff;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    line-height: 1;
-  }
-  .site-header nav a {
-    font-size: 13px;
-    color: var(--text-muted);
-    text-decoration: none;
-    font-weight: 700;
-  }
-  .site-header nav a:hover { color: var(--text); }
-
-  /* Hero */
-  .hero {
-    position: relative;
-    padding: 108px 0 96px;
-    text-align: center;
-    overflow: hidden;
-  }
-  .hero .blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(70px);
-    opacity: 0.35;
-    z-index: 0;
-  }
-  .hero .blob--a {
-    width: 420px; height: 420px;
-    background: var(--habit);
-    top: -160px; left: -120px;
-  }
-  .hero .blob--b {
-    width: 380px; height: 380px;
-    background: var(--goal);
-    top: -100px; right: -140px;
-  }
-  .hero .content { position: relative; z-index: 1; }
-  .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    font-size: 11.5px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    color: var(--text-muted);
-    margin-bottom: 26px;
-  }
-  .eyebrow::before {
-    content: "";
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--habit), var(--goal));
-    display: inline-block;
-  }
-  .hero h1 {
-    font-size: clamp(34px, 6.4vw, 62px);
-    line-height: 1.35;
-    font-weight: 900;
-    margin: 0 0 24px;
-    letter-spacing: -0.02em;
-  }
-  .hero p.lead {
-    font-size: clamp(15px, 2vw, 18px);
-    color: var(--text-muted);
-    margin: 0 auto 40px;
-    max-width: 480px;
-  }
-  .scroll-down {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    color: var(--text);
-    font-size: 17px;
-    animation: bob 2.4s ease-in-out infinite;
-  }
-  @keyframes bob {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(6px); }
-  }
-  @media (prefers-reduced-motion: reduce) { .scroll-down { animation: none; } }
-
-  /* Apps intro */
-  .apps-intro {
-    padding: 8px 0 8px;
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    max-width: 1120px;
-    margin: 0 auto;
-  }
-  .apps-intro h2 { font-size: 20px; font-weight: 900; margin: 0; }
-  .apps-intro .count {
-    font-size: 11.5px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    color: var(--text-muted);
-    text-transform: uppercase;
-  }
-
-  /* App section */
-  .app-section {
-    padding: 56px 0;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 40px;
-    align-items: center;
-  }
-  .app-section .phone-col { display: flex; justify-content: center; }
-  .app-section .text-col { text-align: center; }
-
-  @media (min-width: 860px) {
-    .app-section {
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
-      padding: 88px 0;
-    }
-    .app-section .text-col { text-align: left; }
-    .app-section.reverse .phone-col { order: 2; }
-    .app-section.reverse .text-col { order: 1; }
-  }
-
-  .phone-frame {
-    width: 240px;
-    border-radius: 44px;
-    background: linear-gradient(160deg, #2b2b2e, #0e0e10);
-    padding: 12px;
-    box-shadow: var(--shadow);
-    transform: rotate(-3deg);
-    transition: transform 0.4s ease;
-  }
-  .app-section.reverse .phone-frame { transform: rotate(3deg); }
-  .phone-frame:hover { transform: rotate(0deg) scale(1.02); }
-  .phone-frame .screen {
-    border-radius: 34px;
-    overflow: hidden;
-    background: #fff;
-    aspect-ratio: 9 / 19.5;
-  }
-  .phone-frame .screen img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
-  }
-
-  .app-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 18px;
-  }
-  .app-badge img {
-    width: 40px;
-    height: 40px;
-    border-radius: 11px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
-  }
-  .app-badge .tag {
-    font-size: 11.5px;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-  }
-  .app-section--habit .tag { color: var(--habit-ink); }
-  .app-section--goal .tag { color: var(--goal-ink); }
-  .app-badge .name { font-size: 14px; font-weight: 700; opacity: 0.7; display: block; }
-
-  .app-section h3.catch {
-    font-size: clamp(24px, 3.4vw, 32px);
-    font-weight: 900;
-    line-height: 1.5;
-    margin: 0 0 18px;
-    letter-spacing: -0.01em;
-  }
-  .app-section p.desc {
-    font-size: 15px;
-    color: var(--text-muted);
-    margin: 0 0 26px;
-  }
-
-  .app-features {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 28px;
-    display: inline-flex;
-    flex-direction: column;
-    gap: 11px;
-    text-align: left;
-  }
-  .app-features li {
-    font-size: 14px;
-    padding-left: 24px;
-    position: relative;
-  }
-  .app-features li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 7px;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-  }
-  .app-section--habit .app-features li::before { background: var(--habit); }
-  .app-section--goal .app-features li::before { background: var(--goal); }
-
-  .status-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    font-size: 12.5px;
-    font-weight: 800;
-    padding: 8px 16px;
-    border-radius: 999px;
-  }
-  .status-pill::before {
-    content: "";
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: currentColor;
-  }
-  .app-section--habit .status-pill { color: var(--habit-ink); background: var(--habit-tint); }
-  .app-section--goal .status-pill { color: var(--goal-ink); background: var(--goal-tint); }
-
-  hr.divider {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 0;
-  }
-
-  .more-note {
-    padding: 48px 28px;
-    text-align: center;
-  }
-  .more-note p {
-    margin: 0;
-    font-size: 14.5px;
-    color: var(--text-muted);
-    font-weight: 500;
-  }
-
-  /* Footer */
-  footer {
-    padding: 56px 0 64px;
-    text-align: center;
-    font-size: 12.5px;
-    color: var(--text-muted);
-  }
-  footer .footer-links {
-    display: flex;
-    justify-content: center;
-    gap: 24px;
-    flex-wrap: wrap;
-    margin-bottom: 18px;
-  }
-  footer a { text-decoration: none; color: var(--text-muted); font-weight: 700; }
-  footer a:hover { color: var(--text); }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #0e0e10;
-      --surface: #1a1a1d;
-      --text: #f5f5f7;
-      --text-muted: #a2a2a8;
-      --border: #2a2a2e;
-      --habit-tint: #1c2544;
-      --goal-tint: #3a2313;
-    }
-    header.site-header { background: rgba(14,14,16,0.78); }
-    .phone-frame { background: linear-gradient(160deg, #3a3a3f, #050506); }
-  }
-</style>
+<link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
 
 <header class="site-header">
   <div class="container inner">
-    <div class="logo"><span class="mark">✓</span>日々をつくるアプリ</div>
-    <nav><a href="#apps">アプリ紹介 ↓</a></nav>
+    <a class="logo" href="index.html"><span class="mark">✓</span>日々をつくるアプリ</a>
+    <nav><a href="#apps">アプリ一覧 ↓</a></nav>
   </div>
 </header>
 
@@ -383,75 +23,28 @@
   <span class="blob blob--a"></span>
   <span class="blob blob--b"></span>
   <div class="container content">
-    <span class="eyebrow">SMALL STEPS, EVERY DAY</span>
-    <h1>今日の一歩が、<br>明日の自分をつくる。</h1>
-    <p class="lead">続けたいこと。かなえたいこと。<br>あなたの毎日に寄り添うアプリを、<br>これからもつくっていきます。</p>
-    <a href="#apps" class="scroll-down" aria-label="アプリ紹介へスクロール">↓</a>
+    <p class="lead">続けたいこと。かなえたいこと。あなたの毎日に寄り添うアプリを、これからもつくっていきます。</p>
   </div>
 </section>
 
-<div id="apps" class="container apps-intro reveal">
-  <h2>開発中のアプリ</h2>
-  <span class="count">OUR APPS</span>
+<div id="apps" class="container section-heading reveal">
+  <h2>アプリ一覧</h2>
 </div>
-<hr class="divider">
-
-<section class="app-section app-section--habit container reveal">
-  <div class="phone-col">
-    <div class="phone-frame">
-      <div class="screen"><img src="assets/habit-screen.png" alt="習慣アプリの週間グリッド画面"></div>
-    </div>
-  </div>
-  <div class="text-col">
-    <div class="app-badge">
-      <img src="assets/habit-icon.png" alt="習慣アプリのアイコン">
-      <span>
-        <span class="tag">HABIT 01</span>
-        <span class="name">習慣アプリ</span>
-      </span>
-    </div>
-    <h3 class="catch">小さな「できた」を、<br>毎日の習慣に。</h3>
-    <p class="desc">続けたいことを、少しずつ。日々の積み重ねを応援するアプリを開発しています。</p>
-    <ul class="app-features">
-      <li>週間グリッドで習慣の継続日数がひと目でわかる</li>
-      <li>ホーム画面ウィジェットで今日の進捗をすぐ確認</li>
-      <li>習慣をグループ分けして整理できる</li>
-    </ul>
-    <div><span class="status-pill">公開準備中</span></div>
-  </div>
-</section>
+<div class="container">
+  <div id="app-grid" class="app-grid" aria-live="polite"></div>
+</div>
 
 <hr class="divider">
 
-<section class="app-section app-section--goal reverse container reveal">
-  <div class="phone-col">
-    <div class="phone-frame">
-      <div class="screen"><img src="assets/goal-screen.png" alt="目標アプリの目標一覧画面"></div>
+<section class="container developer reveal">
+  <div class="section-heading"><h2>開発者について</h2></div>
+  <div class="developer-card">
+    <div class="developer-avatar" aria-hidden="true">A</div>
+    <div>
+      <h3>Atsushi Ito</h3>
+      <p>習慣アプリ・目標アプリなど、日々の生活に寄り添うアプリを個人で開発しています。</p>
     </div>
   </div>
-  <div class="text-col">
-    <div class="app-badge">
-      <img src="assets/goal-icon.png" alt="目標アプリのアイコン">
-      <span>
-        <span class="tag">GOAL 02</span>
-        <span class="name">目標アプリ</span>
-      </span>
-    </div>
-    <h3 class="catch">かなえたいことに、<br>一歩ずつ近づく。</h3>
-    <p class="desc">これからの自分に、目指すものを。目標に向かう日々を応援するアプリを開発しています。</p>
-    <ul class="app-features">
-      <li>目標をカードで管理し、テーマやフォントを自由にカスタマイズ</li>
-      <li>月次の振り返り機能で達成度を記録</li>
-      <li>ロック画面・ホーム画面ウィジェットで進捗を表示</li>
-    </ul>
-    <div><span class="status-pill">公開準備中</span></div>
-  </div>
-</section>
-
-<hr class="divider">
-
-<section class="container more-note reveal">
-  <p>ここに載っているのは、今つくっているアプリのほんの一部。<br>これからも、毎日に寄り添うアプリを増やしていく予定です。</p>
 </section>
 
 <footer>
@@ -464,23 +57,11 @@
   </div>
 </footer>
 
+<script src="assets/apps-data.js"></script>
+<script src="assets/site.js"></script>
 <script>
-  (function () {
-    var els = document.querySelectorAll('.reveal');
-    if (!('IntersectionObserver' in window)) {
-      els.forEach(function (el) { el.classList.add('is-visible'); });
-      return;
-    }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
-    els.forEach(function (el) { io.observe(el); });
-  })();
+  renderAppGrid(document.getElementById("app-grid"));
+  initReveal();
 </script>
 
 </body>
