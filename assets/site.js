@@ -20,7 +20,7 @@ function escapeHtml(str) {
 }
 
 function appCardHtml(app) {
-  var detailUrl = "app.html?id=" + encodeURIComponent(app.id);
+  var detailUrl = "app?id=" + encodeURIComponent(app.id);
   var storeBtn = app.storeUrl
     ? '<a class="btn btn-primary accent-' + app.accent + '" href="' + escapeHtml(app.storeUrl) + '">App Storeで見る</a>'
     : "";
@@ -49,7 +49,7 @@ function renderAppGrid(containerEl) {
 }
 
 function otherAppCardHtml(app) {
-  var detailUrl = "app.html?id=" + encodeURIComponent(app.id);
+  var detailUrl = "app?id=" + encodeURIComponent(app.id);
   return (
     '<a class="app-card accent-' + app.accent + '" href="' + detailUrl + '" style="text-decoration:none;">' +
       '<div class="app-card-top">' +

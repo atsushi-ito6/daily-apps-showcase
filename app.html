@@ -14,8 +14,8 @@
 
 <header class="site-header">
   <div class="container inner">
-    <a class="logo" href="index.html"><span class="mark">✓</span>日々をつくるアプリ</a>
-    <nav><a href="index.html#apps">アプリ一覧 ↓</a></nav>
+    <a class="logo" href="./"><span class="mark">✓</span>日々をつくるアプリ</a>
+    <nav><a href="./#apps">アプリ一覧 ↓</a></nav>
   </div>
 </header>
 
@@ -52,7 +52,7 @@
     root.innerHTML =
       '<section style="padding:64px 0;text-align:center;">' +
         '<p>指定されたアプリが見つかりませんでした。</p>' +
-        '<p><a class="link-arrow" href="index.html#apps">アプリ一覧に戻る →</a></p>' +
+        '<p><a class="link-arrow" href="./#apps">アプリ一覧に戻る →</a></p>' +
       '</section>';
     return;
   }
@@ -116,7 +116,7 @@
   var othersHtml = others.map(otherAppCardHtml).join("");
 
   root.innerHTML =
-    '<a class="back-link" href="index.html#apps">← アプリ一覧に戻る</a>' +
+    '<a class="back-link" href="./#apps">← アプリ一覧に戻る</a>' +
 
     '<section class="detail-overview reveal accent-' + app.accent + '">' +
       '<img class="app-icon" src="' + esc(app.icon) + '" alt="' + esc(app.name) + 'のアイコン">' +
@@ -162,7 +162,7 @@
       '<section class="detail-section container reveal">' +
         '<h2>ほかのアプリ</h2>' +
         '<div class="other-apps-grid">' + othersHtml + '</div>' +
-        '<p style="margin-top:20px;"><a class="link-arrow" href="index.html#apps">アプリ一覧に戻る →</a></p>' +
+        '<p style="margin-top:20px;"><a class="link-arrow" href="./#apps">アプリ一覧に戻る →</a></p>' +
       '</section>'
     ) : '');
 
