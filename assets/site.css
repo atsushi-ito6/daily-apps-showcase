@@ -378,18 +378,17 @@ footer a:hover { color: var(--text); }
   gap: 12px;
 }
 .shot-frame {
-  border-radius: 28px;
-  background: linear-gradient(160deg, #2b2b2e, #0e0e10);
-  padding: 10px;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid var(--border);
   box-shadow: var(--shadow);
+  background: var(--surface);
 }
 .shot-frame .screen {
-  border-radius: 20px;
-  overflow: hidden;
-  background: #fff;
   aspect-ratio: 9 / 19.5;
+  display: block;
 }
-.shot-frame .screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.shot-frame .screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
 button.shot-trigger {
   border: none;
   background: none;
@@ -397,7 +396,6 @@ button.shot-trigger {
   cursor: zoom-in;
   display: block;
   width: 100%;
-  border-radius: 28px;
 }
 .shot p.shot-caption { font-size: 13.5px; color: var(--text-muted); margin: 0; text-align: center; }
 
@@ -524,7 +522,6 @@ button.shot-trigger {
     --goal-tint: #3a2313;
   }
   header.site-header { background: rgba(14, 14, 16, 0.82); }
-  .shot-frame:not(.placeholder) { background: linear-gradient(160deg, #3a3a3f, #050506); }
   .shot-frame.placeholder .screen { background: #232326; }
   .pricing-note { background: #1f1f22; }
 }
