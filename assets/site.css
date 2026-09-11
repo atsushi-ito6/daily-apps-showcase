@@ -131,7 +131,8 @@ header.site-header {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  padding: 4px 0 20px;
+  padding-top: 4px;
+  padding-bottom: 20px;
 }
 .section-heading h2 { font-size: 20px; font-weight: 900; margin: 0; }
 
@@ -268,7 +269,8 @@ header.site-header {
 
 /* Developer section */
 .developer {
-  padding: 12px 0 8px;
+  padding-top: 12px;
+  padding-bottom: 8px;
 }
 .developer-card {
   background: var(--surface);
@@ -346,7 +348,7 @@ footer a:hover { color: var(--text); }
 .detail-overview .tagline { font-size: 15px; color: var(--text-muted); margin: 0 0 14px; max-width: 520px; }
 .detail-overview .actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
 
-.detail-section { padding: 40px 0; }
+.detail-section { padding-top: 40px; padding-bottom: 40px; }
 .detail-section h2 { font-size: 19px; font-weight: 900; margin: 0 0 20px; }
 
 .feature-list { list-style: none; padding: 0; margin: 0 0 8px; display: flex; flex-direction: column; gap: 10px; }
