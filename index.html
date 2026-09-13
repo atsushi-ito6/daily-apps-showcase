@@ -13,41 +13,61 @@
 <body>
 
 <header class="site-header">
-  <div class="container inner">
-    <a class="logo" href="./"><span class="mark">✓</span>日々をつくるアプリ</a>
-    <nav><a href="#apps">アプリ一覧 ↓</a></nav>
+  <div class="container site-header__inner">
+    <a class="logo" href="./"><span class="logo__mark" aria-hidden="true">✓</span>日々をつくるアプリ</a>
+    <nav class="site-nav" aria-label="メイン">
+      <a href="#apps">アプリ</a>
+      <a href="#developer">開発者</a>
+    </nav>
   </div>
 </header>
 
-<section class="hero">
-  <span class="blob blob--a"></span>
-  <span class="blob blob--b"></span>
-  <div class="container content">
-    <p class="lead">続けたいこと。かなえたいこと。あなたの毎日に寄り添うアプリを、これからもつくっていきます。</p>
-  </div>
-</section>
-
-<div id="apps" class="container section-heading reveal">
-  <h2>アプリ一覧</h2>
-</div>
-<div class="container">
-  <div id="app-grid" class="app-grid" aria-live="polite"></div>
-</div>
-
-<hr class="divider">
-
-<section class="container developer reveal">
-  <div class="section-heading"><h2>開発者について</h2></div>
-  <div class="developer-card">
-    <div class="developer-avatar" aria-hidden="true">A</div>
-    <div>
-      <h3>Atsushi Ito</h3>
-      <p>習慣アプリ・目標アプリなど、日々の生活に寄り添うアプリを個人で開発しています。</p>
+<main>
+  <section class="hero">
+    <div class="hero__bg" aria-hidden="true">
+      <span class="orb orb--habit"></span>
+      <span class="orb orb--violet"></span>
+      <span class="orb orb--goal"></span>
     </div>
-  </div>
-</section>
+    <div class="container hero__inner">
+      <div class="hero__text reveal">
+        <p class="eyebrow eyebrow--dot">Daily Apps</p>
+        <h1 class="hero__title">続けたいこと。<br><span class="grad">かなえたいこと。</span></h1>
+        <p class="hero__lead">あなたの毎日に寄り添うアプリを、これからもつくっていきます。</p>
+        <div class="actions">
+          <a class="btn btn-dark" href="#apps">アプリを見る<span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn-ghost" href="#developer">開発者について</a>
+        </div>
+      </div>
+      <div id="hero-visual" class="hero__visual reveal"></div>
+    </div>
+  </section>
 
-<footer>
+  <section id="apps" class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Apps</p>
+      <h2>アプリ一覧</h2>
+    </div>
+    <div id="app-grid" class="bands" aria-live="polite"></div>
+  </section>
+
+  <section id="developer" class="section container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Developer</p>
+      <h2>開発者について</h2>
+    </div>
+    <div class="developer-card reveal">
+      <div class="developer-avatar" aria-hidden="true">A</div>
+      <div>
+        <h3>Atsushi Ito<span class="developer-role">個人開発者</span></h3>
+        <p>習慣アプリ・目標アプリなど、日々の生活に寄り添うアプリを個人で開発しています。</p>
+        <div id="developer-apps" class="developer-apps"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
   <div class="container">
     <div class="footer-links">
       <a href="https://atsushi-ito6.github.io/habit-tracker-privacy/">習慣アプリ プライバシーポリシー</a>
@@ -60,7 +80,13 @@
 <script src="assets/apps-data.js"></script>
 <script src="assets/site.js"></script>
 <script>
+  document.getElementById("hero-visual").innerHTML = stackHtml({
+    back: "assets/goal-01_list.png",
+    main: "assets/habit-01_home.png",
+    watch: "assets/habit-05_watch.png"
+  }, true);
   renderAppGrid(document.getElementById("app-grid"));
+  renderDeveloperApps(document.getElementById("developer-apps"));
   initReveal();
 </script>
 

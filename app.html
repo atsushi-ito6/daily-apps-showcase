@@ -13,23 +13,26 @@
 <body>
 
 <header class="site-header">
-  <div class="container inner">
-    <a class="logo" href="./"><span class="mark">✓</span>日々をつくるアプリ</a>
-    <nav><a href="./#apps">アプリ一覧 ↓</a></nav>
+  <div class="container site-header__inner">
+    <a class="logo" href="./"><span class="logo__mark" aria-hidden="true">✓</span>日々をつくるアプリ</a>
+    <nav class="site-nav" aria-label="メイン">
+      <a href="./#apps">アプリ</a>
+      <a href="./#developer">開発者</a>
+    </nav>
   </div>
 </header>
 
-<div id="app-root" class="container">
-  <p>読み込み中です…</p>
-</div>
+<main id="app-root">
+  <p class="container section">読み込み中です…</p>
+</main>
 
-<div id="lightbox" class="lightbox" hidden>
+<div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="スクリーンショットの拡大表示" hidden>
   <button class="lightbox-close" aria-label="画像を閉じる">✕</button>
-  <img src="" alt="">
+  <div class="lightbox-media"></div>
   <p class="lightbox-caption"></p>
 </div>
 
-<footer>
+<footer class="site-footer">
   <div class="container">
     <div class="footer-links">
       <a href="https://atsushi-ito6.github.io/habit-tracker-privacy/">習慣アプリ プライバシーポリシー</a>
@@ -42,130 +45,7 @@
 <script src="assets/apps-data.js"></script>
 <script src="assets/site.js"></script>
 <script>
-(function () {
-  var params = new URLSearchParams(location.search);
-  var id = params.get("id");
-  var app = id ? getApp(id) : null;
-  var root = document.getElementById("app-root");
-
-  if (!app) {
-    root.innerHTML =
-      '<section style="padding:64px 0;text-align:center;">' +
-        '<p>指定されたアプリが見つかりませんでした。</p>' +
-        '<p><a class="link-arrow" href="./#apps">アプリ一覧に戻る →</a></p>' +
-      '</section>';
-    return;
-  }
-
-  document.title = app.name + " | 日々をつくるアプリ";
-  document.getElementById("page-description").setAttribute("content", app.shortDescription);
-
-  function esc(s) { return escapeHtml(s); }
-
-  function shotHtml(shot) {
-    if (shot.placeholder) {
-      return (
-        '<div class="shot">' +
-          '<div class="shot-frame placeholder">' +
-            '<div class="screen">' +
-              '<span class="ph-icon" aria-hidden="true">📷</span>' +
-              '<span class="ph-label">' + esc(shot.label) + '</span>' +
-              '<span class="ph-sub">スクリーンショット準備中</span>' +
-            '</div>' +
-          '</div>' +
-          (shot.caption ? '<p class="shot-caption">' + esc(shot.caption) + '</p>' : '') +
-        '</div>'
-      );
-    }
-    return (
-      '<div class="shot">' +
-        '<div class="shot-frame' + (shot.frame ? ' shot-frame--' + esc(shot.frame) : '') + '">' +
-          '<button type="button" class="shot-trigger" data-src="' + esc(shot.src) + '" data-alt="' + esc(shot.alt) + '" data-caption="' + esc(shot.caption) + '" aria-label="' + esc(shot.caption) + '（タップで拡大）">' +
-            '<span class="screen"><img src="' + esc(shot.src) + '" alt="' + esc(shot.alt) + '" loading="lazy"></span>' +
-          '</button>' +
-        '</div>' +
-        '<p class="shot-caption">' + esc(shot.caption) + '</p>' +
-      '</div>'
-    );
-  }
-
-  function pricingCardHtml(title, items) {
-    if (!items || !items.length) return "";
-    return (
-      '<div class="pricing-card">' +
-        '<h3>' + esc(title) + '</h3>' +
-        '<ul>' + items.map(function (i) { return '<li>' + esc(i) + '</li>'; }).join("") + '</ul>' +
-      '</div>'
-    );
-  }
-
-  var storeBtn = app.storeUrl
-    ? '<a class="btn btn-primary accent-' + app.accent + '" href="' + esc(app.storeUrl) + '">App Storeで見る</a>'
-    : "";
-
-  var pricing = app.pricing || {};
-  var pricingCards = pricingCardHtml("無料プラン", pricing.free) + pricingCardHtml("プレミアムプラン", pricing.premium);
-  var noteLine = pricing.note ? '<p class="pricing-note">' + esc(pricing.note) + '</p>' : "";
-
-  var supportLinks = "";
-  if (app.privacyUrl) supportLinks += '<a href="' + esc(app.privacyUrl) + '">プライバシーポリシー</a>';
-
-  var others = window.APPS.filter(function (a) { return a.id !== app.id; }).slice(0, 2);
-  var othersHtml = others.map(otherAppCardHtml).join("");
-
-  root.innerHTML =
-    '<a class="back-link" href="./#apps">← アプリ一覧に戻る</a>' +
-
-    '<section class="detail-overview reveal accent-' + app.accent + '">' +
-      '<img class="app-icon" src="' + esc(app.icon) + '" alt="' + esc(app.name) + 'のアイコン">' +
-      '<div>' +
-        '<div><span class="status-pill">' + statusLabel(app.status) + '</span></div>' +
-        '<h1>' + esc(app.name) + '</h1>' +
-        '<p class="tagline">' + esc(app.description) + '</p>' +
-        '<div class="actions">' + storeBtn + '</div>' +
-      '</div>' +
-    '</section>' +
-
-    '<hr class="divider">' +
-
-    '<section class="detail-section container accent-' + app.accent + ' reveal">' +
-      '<h2>主な機能</h2>' +
-      '<ul class="feature-list">' + app.features.map(function (f) { return '<li>' + esc(f) + '</li>'; }).join("") + '</ul>' +
-    '</section>' +
-
-    '<section class="detail-section container reveal">' +
-      '<h2>スクリーンショット</h2>' +
-      '<div class="shot-grid">' + app.screenshots.map(shotHtml).join("") + '</div>' +
-    '</section>' +
-
-    '<hr class="divider">' +
-
-    '<section class="detail-section container reveal">' +
-      '<h2>無料・有料機能</h2>' +
-      (pricingCards ? '<div class="pricing-grid">' + pricingCards + '</div>' : '') +
-      noteLine +
-    '</section>' +
-
-    (supportLinks ? (
-      '<hr class="divider">' +
-      '<section class="detail-section container reveal">' +
-        '<h2>プライバシーポリシー</h2>' +
-        '<div class="support-links">' + supportLinks + '</div>' +
-      '</section>'
-    ) : '') +
-
-    (others.length ? (
-      '<hr class="divider">' +
-      '<section class="detail-section container reveal">' +
-        '<h2>ほかのアプリ</h2>' +
-        '<div class="other-apps-grid">' + othersHtml + '</div>' +
-        '<p style="margin-top:20px;"><a class="link-arrow" href="./#apps">アプリ一覧に戻る →</a></p>' +
-      '</section>'
-    ) : '');
-
-  initLightbox();
-  initReveal();
-})();
+  renderAppDetail(document.getElementById("app-root"));
 </script>
 
 </body>
