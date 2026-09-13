@@ -79,7 +79,7 @@
     }
     return (
       '<div class="shot">' +
-        '<div class="shot-frame">' +
+        '<div class="shot-frame' + (shot.frame ? ' shot-frame--' + esc(shot.frame) : '') + '">' +
           '<button type="button" class="shot-trigger" data-src="' + esc(shot.src) + '" data-alt="' + esc(shot.alt) + '" data-caption="' + esc(shot.caption) + '" aria-label="' + esc(shot.caption) + '（タップで拡大）">' +
             '<span class="screen"><img src="' + esc(shot.src) + '" alt="' + esc(shot.alt) + '" loading="lazy"></span>' +
           '</button>' +
